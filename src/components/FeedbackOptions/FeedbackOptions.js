@@ -22,7 +22,7 @@ const FeedbackOptions = ({ buttons, onLeaveFeedback }) => {
 };
 
 FeedbackOptions.propTypes = {
-  buttons: propTypes.array.isRequired,
+  buttons: propTypes.arrayOf(propTypes.string).isRequired,
   onLeaveFeedback: propTypes.func.isRequired,
 };
 

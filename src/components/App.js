@@ -11,8 +11,6 @@ export default class App extends Component {
     bad: 0,
   };
 
-  buttons = ['good', 'neutral', 'bad'];
-
   countTotalFeedback = () => {
     return Object.values(this.state).reduce(
       (prevValue, currentValue) => prevValue + currentValue,
@@ -25,25 +23,11 @@ export default class App extends Component {
   };
 
   onNewFeedback = event => {
-    if (event.currentTarget.value === 'good') {
-      this.setState(prevState => ({
-        good: prevState.good + 1,
-      }));
-    }
-
-    if (event.currentTarget.value === 'neutral') {
-      this.setState(prevValue => ({
-        neutral: prevValue.neutral + 1,
-      }));
-    }
-
-    if (event.currentTarget.value === 'bad') {
-      this.setState(prevValue => ({
-        bad: prevValue.bad + 1,
-      }));
-    }
+    this.setState(prevState => ({
+      [event.target.value]: prevState[event.target.value] + 1,
+    }));
   };
-
+  // {[e.currentTarget.value]:prevState[e.currentTarget.value]+1}
   render() {
     const { good, neutral, bad } = this.state;
     const total = this.countTotalFeedback();
@@ -51,13 +35,13 @@ export default class App extends Component {
 
     return (
       <>
-        <Section title={'Please leave feed back'}>
+        <Section title="Please leave feed back">
           <FeedbackOptions
-            buttons={this.buttons}
+            buttons={Object.keys(this.state)}
             onLeaveFeedback={this.onNewFeedback}
           />
         </Section>
-        <Section title={'Statistics'}>
+        <Section title="Statistics">
           {total === 0 ? (
             <Notification message={'No feedback given'} />
           ) : (
